@@ -174,40 +174,77 @@ function calculate() {
 }
 
 function printexplation() {
+
   printOnPage("The first step is to sort the array:\n");
   for (let i = 0; i < matrix.length; i++) {
+    
     let row = '';
+    
     for (let j = 0; j < matrix.length; j++) {
-      row += matrix[i][j]+"x<sub>"+(j+1)+"</sub>";
+     
+      if (matrix[i][j] >= 0)
+      {
+        if (j == 0)
+        {
+          row += matrix[i][j] +"x<sub>"+(j+1)+"</sub>";
+        }
+
+        else
+        {
+          row += " + "+ matrix[i][j] +"x<sub>"+(j+1)+"</sub>";
+        }
+      }
+      else 
+      {
+        row += " - "+ (-1*matrix[i][j]) +"x<sub>"+(j+1)+"</sub>";
+      }
+
       row+="\t";
 
     }
-    row += "= "+solution[i];
+    if (solution[i] >= 0)
+    {
+        row += "= "+solution[i];
+    }
+    else 
+    {
+      row += "= - "+ (-1*solution[i]);
+    }
     printOnPage(row);
   }
 
   printOnPage("The second step is to create the equations using Guass Jaccobi on the matrix:\n");
   for (let i = 0; i < matrix.length; i++) {
+    
     let answer = '';
+    
     answer += `X<sub>${(i + 1)}` + "</sub> =<sup> 1</sup>&frasl;<sub> " + (matrix[i][i]) + "</sub> ( ";
+    
     let coffecientcounter = 1
 
     for (let j = 0; j < matrix.length; j++) {
+      
+      if (j == 0) {
 
-      if (solution[i] == 0) {} else if (j == 0) {
-        if (solution[i] < 0) {
-          answer += ("-" + (-1 * solution[i]));
-        } else {
+        if (solution[i] < 0) 
+        {
+          answer += (" - " + (-1 * solution[i]));
+        }
+
+        else {
           answer += ((solution[i]));
         }
       }
 
       if (i == j) {
-        answer += ("+0 x<sub>" + (coffecientcounter)+"</sub>");
-      } else if (matrix[i][j] >= 0) {
-        answer += ("+" + (matrix[i][j]) + " x<sub>" + (coffecientcounter)+"</sub>");
-      } else {
-        answer += ("-" + (-1 * matrix[i][j]) + " x<sub>" + (coffecientcounter)+"</sub>");
+        answer += (" - 0 x<sub>" + (coffecientcounter)+"</sub>");
+      } 
+      
+      else if (matrix[i][j] >= 0) {
+        answer += (" - " + (matrix[i][j]) + " x<sub>" + (coffecientcounter)+"</sub>");
+      } 
+      else {
+        answer += (" + " + (-1 * matrix[i][j]) + " x<sub>" + (coffecientcounter)+"</sub>");
       }
 
       coffecientcounter++;
